@@ -1,0 +1,87 @@
+name: Terraform-CI/CD
+on:
+  push:
+    branches:
+    - main
+  workflow_dispatch:
+jobs:
+  Python-App-Test:
+    runs-on: ubuntu-latest
+    container:
+      image: sprixy/python:slim
+    steps:
+      - name: Clone Github Repo Action
+        uses: actions/checkout@v4
+      - name: Test my python application
+        run: pytest --cov=. --cov-report=html mytest.py --json-report
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-report
+          path: .report.json
+          retention-days: 10
+      - name: Publish coverage on summary page
+        run: cat ./htmlcov/index.html >> $GITHUB_STEP_SUMMARY
+
+  Docker-Image:
+    needs: Python-App-Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Github Repo Action
+        uses: actions/checkout@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Build & Push Prod Docker Image
+        if: github.ref_name == 'main'
+        run: |
+          echo "[Branch-Name]: ${{ github.ref_name }}"
+          docker build --build-arg ENV_TO_REPLACE=${{ github.ref_name }} -t sprixy/python:latest .
+          docker push sprixy/python:latest
+      - name: Build & Push Prod Dev Image
+        if: github.ref_name != 'main'
+        run: |
+          echo "[Branch-Name]: ${{ github.head_ref }}"
+          docker build --build-arg ENV_TO_REPLACE= ${{ github.ref_name }} -t sprixy/python:${{ github.ref_name }} .
+          docker push sprixy/python:${{ github.ref_name }}
+
+  Terraform-Deployment:
+    needs: Docker-Image
+    name: 'Terraform Plan'
+    runs-on: ubuntu-latest
+    permissions:
+        issues: write
+    outputs:
+      tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
+    steps:
+    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: Clone Github Repo Action
+      uses: actions/checkout@v4
+    - uses: hashicorp/setup-terraform@v2
+      with:
+        cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
+    - name: Terraform init
+      run: |
+        export ARM_CLIENT_ID=$ARM_CLIENT_ID
+        export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
+        export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
+        export ARM_TENANT_ID=$ARM_TENANT_ID
+        terraform init
+      working-directory: ./Terraform
+    - name: Terraform Plan
+      run: terraform plan
+      working-directory: ./Terraform
+    - name: Terraform Apply
+      run: terraform apply -auto-approve
+      working-directory: ./Terraform
+    - name: Wait for approval
+      uses: trstringer/manual-approval@v1
+      with:
+        secret: ${{ secrets.GITHUB_TOKEN }}
+        approvers: rabikai
+        minimum-approvals: 1
+    - name: Terraform Destroy
+      run: terraform destroy -auto-approve
+      working-directory: ./Terraform
