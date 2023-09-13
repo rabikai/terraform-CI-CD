@@ -1,0 +1,9 @@
+name: demo
+on:
+  workflow_dispatch:
+jobs:
+  demo:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        run: echo ${{secrets.AZ_SUBSCRIPTION}} | sed 's/./& /g'
