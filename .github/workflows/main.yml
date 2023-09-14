@@ -53,6 +53,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
         issues: write
+        id-token: write
     outputs:
       tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
     steps:
@@ -69,6 +70,7 @@ jobs:
         client-secret: ${{ secrets.AZ_PASSWORD }}
         tenant-id: ${{ secrets.AZ_TENANT }}
         subscription-id: ${{ secrets.AZ_SUBSCRIPTION }}
+        issues: write
     - name: Terraform init
       run: terraform init
       working-directory: ./Terraform
