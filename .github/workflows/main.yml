@@ -62,13 +62,12 @@ jobs:
     - uses: hashicorp/setup-terraform@v2
       with:
         cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_TOKEN }}
     - name: Terraform init
-      run: |
-        export ARM_CLIENT_ID=$ARM_CLIENT_ID
-        export ARM_CLIENT_SECRET=$ARM_CLIENT_SECRET
-        export ARM_SUBSCRIPTION_ID=$ARM_SUBSCRIPTION_ID
-        export ARM_TENANT_ID=$ARM_TENANT_ID
-        terraform init -migrate-state
+      run: terraform init
       working-directory: ./Terraform
     - name: Terraform Plan
       run: terraform plan
