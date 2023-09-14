@@ -12,9 +12,10 @@ ip_address = socket.gethostbyname(hostname)
 ## printing the hostname and ip_address
 print(f"Hostname: {hostname}")
 print(f"IP Address: {ip_address}")
+urlPrefix = "http://"
+url = urlPrefix + ip_address
 
 def test_curl_request(url):
-    url = "http://" + ip_address
     # Define the command to execute using curl
     command = ['curl', url]
 
@@ -25,7 +26,7 @@ def test_curl_request(url):
     return result.stdout
 
 def test_curl_request_env(url):
-    url = "http://" + ip_address + "/env"
+    url += "/env"
     # Define the command to execute using curl
     command = ['curl', url]
 
@@ -36,7 +37,7 @@ def test_curl_request_env(url):
     return result.stdout
 
 def test_curl_request_int(url):
-    url = "http://" + ip_address + "/" + str(random.randint(0,100))
+    url += "/" + str(random.randint(0,100))
     # Define the command to execute using curl
     command = ['curl', url]
 
@@ -51,5 +52,3 @@ response = test_curl_request(ip_address)
 print(response)
 response = test_curl_request_env(ip_address)
 print(response)
-#response = test_curl_request_int(ip_address)
-#print(response)

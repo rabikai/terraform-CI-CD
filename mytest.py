@@ -8,5 +8,5 @@ def test_index():
 def test_show_env():
     assert rng.show_env() == "This is the value of the env " + str(os.getenv('ENV_TO_REPLACE')) + "\n"
 
-def test_myFunction():
-    assert rng.myFunction(10, 2) == 5
+def test_my_function():
+    assert rng.my_function(10, 2) == 5

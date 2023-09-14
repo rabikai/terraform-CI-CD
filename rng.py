@@ -28,7 +28,7 @@ def rng(how_many_bytes):
         os.read(urandom, how_many_bytes),
         content_type="application/octet-stream")
 
-def myFunction(a ,b):
+def my_function(a ,b):
     if b != 0:
         return a/b
     else:
