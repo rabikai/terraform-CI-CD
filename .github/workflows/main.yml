@@ -22,11 +22,6 @@ jobs:
           retention-days: 10
       - name: Publish coverage on summary page
         run: cat ./htmlcov/index.html >> $GITHUB_STEP_SUMMARY
-      - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Docker-Image:
     needs: Python-App-Test

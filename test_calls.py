@@ -3,6 +3,7 @@ import subprocess
 from random import seed
 from random import randint
 from io import BytesIO
+import os
 
 ## getting the hostname by socket.gethostname() method
 hostname = socket.gethostname()
@@ -38,10 +39,8 @@ def test_curl_request_env(url):
     return result.stdout
 
 def test_curl_request_int(url):
-    seed(1)
-    value = randint(0, 10)
-    print(value)
-    url += "/" + str(value)
+    urandom = os.open("/dev/urandom", os.O_RDONLY)
+    url += "/" + str(urandom)
     # Define the command to execute using curl
     command = ['curl', url]
 
