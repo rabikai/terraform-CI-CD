@@ -72,6 +72,7 @@ jobs:
         export AZURE_TENANT_ID=${{ secrets.AZ_TENANT }}
         export AZURE_CLIENT_ID=${{ secrets.AZ_USER }}
         export AZURE_CLIENT_SECRET=${{ secrets.AZ_PASSWORD }}
+        env
         terraform init
       working-directory: ./Terraform
     - name: Terraform Plan
