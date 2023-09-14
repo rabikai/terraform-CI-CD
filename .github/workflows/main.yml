@@ -63,10 +63,10 @@ jobs:
     - uses: hashicorp/setup-terraform@v2
       with:
         cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
-    - name: 'Login via Azure CLI'
-      uses: azure/login@v1
-      with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+    # - name: 'Login via Azure CLI'
+    #   uses: azure/login@v1
+    #   with:
+    #     creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Terraform init
       run: terraform init
       working-directory: ./Terraform
