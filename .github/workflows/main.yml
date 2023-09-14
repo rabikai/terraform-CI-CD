@@ -55,14 +55,14 @@ jobs:
         issues: write
         id-token: write
     env:
-      # ARM_CLIENT_ID: ${{ secrets.AZ_USER }}
-      # ARM_CLIENT_SECRET: ${{ secrets.AZ_PASSWORD }}
-      # ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION }}
-      # ARM_TENANT_ID: ${{ secrets.AZ_TENANT }}
-      AZURE_CLIENT_ID: ${{ secrets.AZ_USER }}
-      AZURE_CLIENT_SECRET: ${{ secrets.AZ_PASSWORD }}
-      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION }}
-      AZURE_TENANT_ID: ${{ secrets.AZ_TENANT }}
+      ARM_CLIENT_ID: ${{ secrets.AZ_USER }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZ_PASSWORD }}
+      ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION }}
+      ARM_TENANT_ID: ${{ secrets.AZ_TENANT }}
+      # AZURE_CLIENT_ID: ${{ secrets.AZ_USER }}
+      # AZURE_CLIENT_SECRET: ${{ secrets.AZ_PASSWORD }}
+      # AZURE_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION }}
+      # AZURE_TENANT_ID: ${{ secrets.AZ_TENANT }}
     outputs:
       tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
     steps:
