@@ -65,6 +65,7 @@ jobs:
         cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
     - name: Terraform init
       run: |
+        chmod +x login.sh
         ./login.sh
         terraform init
       working-directory: ./Terraform
