@@ -66,10 +66,7 @@ jobs:
     - name: 'Login via Azure CLI'
       uses: azure/login@v1
       with:
-        client-id: ${{ secrets.AZ_USER }}
-        client-secret: ${{ secrets.AZ_PASSWORD }}
-        tenant-id: ${{ secrets.AZ_TENANT }}
-        subscription-id: ${{ secrets.AZ_SUBSCRIPTION }}
+        creds: '{"clientId":"${{ secrets.AZ_USER }}","clientSecret":"${{ secrets.AZ_PASSWORD }}","subscriptionId":"${{ secrets.AZ_SUBSCRIPTION }}","tenantId":"${{ secrets.AZ_TENANT }}"}'
     - name: Terraform init
       run: terraform init
       working-directory: ./Terraform
