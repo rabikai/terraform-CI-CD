@@ -68,7 +68,12 @@ jobs:
     #   with:
     #     creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Terraform init
-      run: terraform init
+      run: |
+        export ARM_CLIENT_ID=${{ secrets.AZ_USER }}
+        export ARM_CLIENT_SECRET=${{ secrets.AZ_PASSWORD }}
+        export ARM_SUBSCRIPTION_ID=${{ secrets.AZ_SUBSCRIPTION }}
+        export ARM_TENANT_ID=${{ secrets.TENANT }}
+        terraform init
       working-directory: ./Terraform
     - name: Terraform Plan
       run: terraform plan
