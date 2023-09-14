@@ -61,8 +61,6 @@ jobs:
     - name: Clone Github Repo Action
       uses: actions/checkout@v4
     - uses: hashicorp/setup-terraform@v2
-      with:
-        cli_config_credentials_token: ${{ secrets.TERRAFORM_TOKEN }}
     - name: Terraform init
       run: |
         chmod +x login.sh
