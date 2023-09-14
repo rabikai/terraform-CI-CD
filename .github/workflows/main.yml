@@ -56,6 +56,11 @@ jobs:
         id-token: write
     outputs:
       tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
+    env:
+      ARM_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+      ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+      ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+      ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
     steps:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Clone Github Repo Action
@@ -69,38 +74,14 @@ jobs:
     #     creds: ${{ secrets.AZURE_CREDENTIALS }}
     - name: Terraform init
       run: |
-        export ARM_CLIENT_ID=${{ secrets.AZ_USER }}
-        export ARM_CLIENT_SECRET=${{ secrets.AZ_PASSWORD }}
-        export ARM_SUBSCRIPTION_ID=${{ secrets.AZ_SUBSCRIPTION }}
-        export ARM_TENANT_ID=${{ secrets.AZ_TENANT }}
-        export AZURE_CLIENT_ID=${{ secrets.AZ_USER }}
-        export AZURE_CLIENT_SECRET=${{ secrets.AZ_PASSWORD }}
-        export AZURE_SUBSCRIPTION_ID=${{ secrets.AZ_SUBSCRIPTION }}
-        export AZURE_TENANT_ID=${{ secrets.AZ_TENANT }}
         terraform init
       working-directory: ./Terraform
     - name: Terraform Plan
       run: |
-        export ARM_CLIENT_ID=${{ secrets.AZ_USER }}
-        export ARM_CLIENT_SECRET=${{ secrets.AZ_PASSWORD }}
-        export ARM_SUBSCRIPTION_ID=${{ secrets.AZ_SUBSCRIPTION }}
-        export ARM_TENANT_ID=${{ secrets.AZ_TENANT }}
-        export AZURE_CLIENT_ID=${{ secrets.AZ_USER }}
-        export AZURE_CLIENT_SECRET=${{ secrets.AZ_PASSWORD }}
-        export AZURE_SUBSCRIPTION_ID=${{ secrets.AZ_SUBSCRIPTION }}
-        export AZURE_TENANT_ID=${{ secrets.AZ_TENANT }}
         terraform plan
       working-directory: ./Terraform
     - name: Terraform Apply
       run: |
-        export ARM_CLIENT_ID=${{ secrets.AZ_USER }}
-        export ARM_CLIENT_SECRET=${{ secrets.AZ_PASSWORD }}
-        export ARM_SUBSCRIPTION_ID=${{ secrets.AZ_SUBSCRIPTION }}
-        export ARM_TENANT_ID=${{ secrets.AZ_TENANT }}
-        export AZURE_CLIENT_ID=${{ secrets.AZ_USER }}
-        export AZURE_CLIENT_SECRET=${{ secrets.AZ_PASSWORD }}
-        export AZURE_SUBSCRIPTION_ID=${{ secrets.AZ_SUBSCRIPTION }}
-        export AZURE_TENANT_ID=${{ secrets.AZ_TENANT }}
         terraform apply -auto-approve
       working-directory: ./Terraform
     - name: Wait for approval
@@ -110,14 +91,6 @@ jobs:
         approvers: rabikai
         minimum-approvals: 1
     - name: |
-        export ARM_CLIENT_ID=${{ secrets.AZ_USER }}
-        export ARM_CLIENT_SECRET=${{ secrets.AZ_PASSWORD }}
-        export ARM_SUBSCRIPTION_ID=${{ secrets.AZ_SUBSCRIPTION }}
-        export ARM_TENANT_ID=${{ secrets.AZ_TENANT }}
-        export AZURE_CLIENT_ID=${{ secrets.AZ_USER }}
-        export AZURE_CLIENT_SECRET=${{ secrets.AZ_PASSWORD }}
-        export AZURE_SUBSCRIPTION_ID=${{ secrets.AZ_SUBSCRIPTION }}
-        export AZURE_TENANT_ID=${{ secrets.AZ_TENANT }}
         Terraform Destroy
       run: terraform destroy -auto-approve
       working-directory: ./Terraform
