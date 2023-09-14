@@ -59,14 +59,9 @@ jobs:
       ARM_CLIENT_SECRET: ${{ secrets.AZ_PASSWORD }}
       ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION }}
       ARM_TENANT_ID: ${{ secrets.AZ_TENANT }}
-      # AZURE_CLIENT_ID: ${{ secrets.AZ_USER }}
-      # AZURE_CLIENT_SECRET: ${{ secrets.AZ_PASSWORD }}
-      # AZURE_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION }}
-      # AZURE_TENANT_ID: ${{ secrets.AZ_TENANT }}
     outputs:
       tfplanExitCode: ${{ steps.tf-plan.outputs.exitcode }}
     steps:
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Clone Github Repo Action
       uses: actions/checkout@v4
     - uses: hashicorp/setup-terraform@v2
