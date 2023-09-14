@@ -1,6 +1,7 @@
 import socket
 import subprocess
-import random
+from random import seed
+from random import randint
 from io import BytesIO
 
 ## getting the hostname by socket.gethostname() method
@@ -37,7 +38,10 @@ def test_curl_request_env(url):
     return result.stdout
 
 def test_curl_request_int(url):
-    url += "/" + str(random.randint(0,100))
+    seed(1)
+    value = randint(0, 10)
+    print(value)
+    url += "/" + str(value)
     # Define the command to execute using curl
     command = ['curl', url]
 
