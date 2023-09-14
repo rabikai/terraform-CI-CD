@@ -61,6 +61,10 @@ jobs:
       ARM_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
       ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
       ARM_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
+      AZURE_CLIENT_ID: ${{secrets.ARM_CLIENT_ID}}
+      AZURE_CLIENT_SECRET: ${{secrets.ARM_CLIENT_SECRET}}
+      AZURE_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+      AZURE_TENANT_ID: ${{secrets.ARM_TENANT_ID}}
     steps:
     # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: Clone Github Repo Action
