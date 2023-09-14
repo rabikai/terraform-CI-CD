@@ -34,7 +34,7 @@ resource "azurerm_container_group" "container" {
 }
 
 resource "azurerm_storage_account" "tfstate" {
-  name                     = "spxstg"
+  name                     = "sprixystg"
   resource_group_name      = azurerm_resource_group.rg.name
   location                 = azurerm_resource_group.rg.location
   account_tier             = "Standard"
