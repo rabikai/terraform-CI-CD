@@ -68,8 +68,6 @@ jobs:
     - name: Terraform init
       run: terraform init
       working-directory: ./Terraform
-    - name: Terraform Import
-      run: terraform import
     - name: Terraform Plan
       run: terraform plan
       working-directory: ./Terraform
