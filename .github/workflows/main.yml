@@ -55,10 +55,10 @@ jobs:
         issues: write
         id-token: write
     env:
-      ARM_CLIENT_ID: ${{ secrets.AZ_USER }}
-      ARM_CLIENT_SECRET: ${{ secrets.AZ_PASSWORD }}
-      ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION }}
-      ARM_TENANT_ID: ${{ secrets.AZ_TENANT }}
+      # ARM_CLIENT_ID: ${{ secrets.AZ_USER }}
+      # ARM_CLIENT_SECRET: ${{ secrets.AZ_PASSWORD }}
+      # ARM_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION }}
+      # ARM_TENANT_ID: ${{ secrets.AZ_TENANT }}
       AZURE_CLIENT_ID: ${{ secrets.AZ_USER }}
       AZURE_CLIENT_SECRET: ${{ secrets.AZ_PASSWORD }}
       AZURE_SUBSCRIPTION_ID: ${{ secrets.AZ_SUBSCRIPTION }}
@@ -71,20 +71,13 @@ jobs:
       uses: actions/checkout@v4
     - uses: hashicorp/setup-terraform@v2
     - name: Terraform init
-      run: |
-        chmod +x login.sh
-        ./login.sh
-        terraform init
+      run: terraform init
       working-directory: ./Terraform
     - name: Terraform Plan
-      run: |
-        ./login.sh
-        terraform plan
+      run: terraform plan
       working-directory: ./Terraform
     - name: Terraform Apply
-      run: |
-        ./login.sh
-        terraform apply -auto-approve
+      run: terraform apply -auto-approve
       working-directory: ./Terraform
     - name: Wait for approval
       uses: trstringer/manual-approval@v1
@@ -93,7 +86,5 @@ jobs:
         approvers: rabikai
         minimum-approvals: 1
     - name: Terraform Destroy
-      run: |
-        ./login.sh
-        terraform destroy -auto-approve
+      run: terraform destroy -auto-approve
       working-directory: ./Terraform
