@@ -70,7 +70,6 @@ jobs:
         client-secret: ${{ secrets.AZ_PASSWORD }}
         tenant-id: ${{ secrets.AZ_TENANT }}
         subscription-id: ${{ secrets.AZ_SUBSCRIPTION }}
-        issues: write
     - name: Terraform init
       run: terraform init
       working-directory: ./Terraform
